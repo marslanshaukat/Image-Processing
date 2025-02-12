@@ -1,0 +1,29 @@
+function [heqim]=nvdhistm(ti,ei,L)
+
+ti=imread('tire.tif');
+ei=imread('kids.tif');
+L=255;
+
+[rt ct]=size(ti);
+[re ce]=size(ei);
+[h normh]=nvdhist(ei,L);
+[ncdf]=nvdcdf(normh,L);
+
+tr=zeros(L,1);
+tr=round(ncdf*L);
+
+heqim=zeros(rt,ct);
+
+for i=1:rt
+    for j=1:ct
+        heqim(i,j)=tr(ti(i,j)+1);
+    end
+end
+
+heqim=uint8(heqim);
+
+[h1 normh1]=nvdhist(heqim,L);
+% figure
+% [ncdf1]=nvdcdf(normh1,L);
+
+end
